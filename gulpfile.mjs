@@ -1,26 +1,27 @@
-const gulp = require('gulp');
-const fs = require('fs-extra');
-const path = require('path');
-const chalk = require('chalk');
-const stringify = require('json-stringify-pretty-compact');
-const less = require('gulp-less');
-const git = require('gulp-git');
-const concat = require('gulp-concat');
+import * as path from "path";
 
-const argv = require('yargs').argv;
+import gulp from "gulp";
+import fs from "fs-extra";
+import chalk from "chalk";
+import stringify from "json-stringify-pretty-compact";
+import less from "gulp-less";
+import git from "gulp-git";
+import concat from "gulp-concat";
+import yargs from "yargs";
+import webpack from "webpack";
+import BrowserSync from "browser-sync";
 
-const webpack = require('webpack');
-const webpackConfig = require('./webpack.config.js');
+import webpackConfig from "./webpack.config.js";
 
-const browserSync = require('browser-sync').create();
-
+const argv = yargs(process.argv).argv;
+const browserSync = BrowserSync.create("watch");
 
 const moduleName = "fvtt-markdown-editor";
 const repoBaseUrl = 'https://github.com/Moerill/';
 const rawBaseUrl = 'https://raw.githubusercontent.com/Moerill/'
 
 function getManifest() {
-	const json = {root: ''};
+	const json = { root: '' };
 
 	const modulePath = 'module.json';
 	const systemPath = 'system.json';
@@ -54,18 +55,18 @@ function buildLess() {
  * Watch for changes for each build step
  */
 function buildWatch() {
-	const config = {
+	const config /* BrowserSync.Options */ = {
 		server: false,
 		proxy: {
 			target: "localhost:30000",
 			ws: true
-    },
-    ghostMode: {
-      clicks: false,
-      scroll: false,
-      location: false,
-      forms: false
-    },
+		},
+		ghostMode: {
+			clicks: false,
+			scroll: false,
+			location: false,
+			forms: false
+		},
 		browser: 'google-chrome',
 		open: false
 	}
@@ -83,10 +84,10 @@ function buildWatch() {
 
 function buildWebpack() {
 	return new Promise(function (resolve, reject) {
-		webpack(webpackConfig,  function(err, stats) {
+		webpack(webpackConfig, function (err, stats) {
 			if (err)
 				return reject(err);
-			if (stats.hasErrors()) 
+			if (stats.hasErrors())
 				return reject(new Error(stats.compilation.errors.join('\n')));
 
 			browserSync.reload();
@@ -104,9 +105,9 @@ function buildWebpack() {
 function updateManifest(cb) {
 	const packageJson = fs.readJSONSync('package.json');
 	const config = {
-      repository: repoBaseUrl + moduleName,
-      rawURL: rawBaseUrl + moduleName
-    },
+		repository: repoBaseUrl + moduleName,
+		rawURL: rawBaseUrl + moduleName
+	},
 		manifest = getManifest(),
 		rawURL = config.rawURL,
 		repoURL = config.repository,
@@ -230,15 +231,8 @@ function gitTag() {
 	);
 }
 
-const execGit = gulp.series(gitAdd, gitCommit, gitTag);
-
-const execBuild = gulp.parallel(buildWebpack, buildLess);
-
-exports.build = execBuild;
-exports.watch = buildWatch;
-exports.update = updateManifest;
-exports.publish = gulp.series(
-	updateManifest,
-	execBuild,
-	execGit
-);
+export const build = gulp.parallel(buildWebpack, buildLess);
+export const watch = buildWatch;
+export const update = updateManifest;
+export const publish = gulp.series(update, build,
+	gulp.series(gitAdd, gitCommit, gitTag));
