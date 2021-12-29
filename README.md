@@ -63,6 +63,15 @@ List of extra markdown Syntax
 	block
 	$$$
 	```
+- ***OPTIONAL***: Use markdown-it-container syntax to create blocks and assign arbitrary classes to them, like:
+  ```
+    ::: my-block
+	# A header
+	Some paragraphs
+	:::
+  ```
+
+  You may nest them by adding a `:` to each additional containing block.
 
 ## Keyboard shortcuts
 
