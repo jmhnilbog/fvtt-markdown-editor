@@ -37,6 +37,7 @@ This module uses the following libraries:
 * [EasyMDE](https://github.com/Ionaru/easy-markdown-editor)
 * [Markdown-it](https://github.com/markdown-it/markdown-it)  
   * [markdown-it-container plugin](https://github.com/markdown-it/markdown-it-container)
+  * [markdown-it-deflist plugin](https://github.com/markdown-it/markdown-it-deflist)
 * [Codemirror](https://codemirror.net/)
   
 Thanks to @NickEast for his ![foundry project creator](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project) which i'm using in a modified version for my building and publishing workflow.
@@ -72,6 +73,12 @@ List of extra markdown Syntax
   ```
 
   You may nest them by adding a `:` to each additional containing block.
+- ***OPTIONAL***: Use markdown-it-deflist syntax to create <DL> lists, like:
+  ```
+    Definition term
+	: First definition
+	: Second definition
+  ```
 
 ## Keyboard shortcuts
 
