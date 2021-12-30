@@ -1,10 +1,14 @@
 {
-	"compilerOptions": {	
-    "checkJs": true,	
-    "types": ["foundry-pc-types"],
+  "compilerOptions": {
+    "checkJs": false,
     "target": "es2020",
-    "module": "es6"
+    "module": "es6",
+    "moduleResolution": "node",
+    "noEmit": true
   },
-  "include": ["src/scripts/**/*", "index.js", "gulpfile.mjs"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/scripts/**/*",
+    "index.js",
+    "gulpfile.mjs"
+  ]
 }
