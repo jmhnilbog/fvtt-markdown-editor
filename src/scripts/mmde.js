@@ -5,7 +5,8 @@ const md = require('markdown-it')({
 	linkify: true,
 });
 export const markdownIt = md;
-require('codemirror/keymap/vim.js');
+
+import "codemirror/keymap/vim.js";
 
 export const markdownItContainer = require('markdown-it-container');
 

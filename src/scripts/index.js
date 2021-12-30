@@ -4,13 +4,13 @@ import { QuickInsertPlugin } from './plugins/quick-insert.js';
 
 import { MemeSettings } from './settings.js';
 
-window.MEME = {
+const MEME = {
 	ChatMeme,
 	markdownIt,
 	BaseMeme: Meme,
 };
 
-// Hooks.on('ready', () => game.journal.get('Gb3Z2SCBSDp1sEVe').sheet.render(true))
+window.MEME = MEME;
 
 Hooks.on('init', function () {
 	MemeSettings.init();
