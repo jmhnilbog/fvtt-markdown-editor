@@ -79,6 +79,10 @@ List of extra markdown Syntax
 	: First definition
 	: Second definition
   ```
+- ***OPTIONAL***: Use markdown-it-attrs syntax to set element attributes.
+  ```
+    # This is a special header {.special}
+  ```
 
 ## Keyboard shortcuts
 

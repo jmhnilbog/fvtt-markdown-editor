@@ -188,10 +188,11 @@ export class Meme extends EasyMDE {
 		let data;
 		try {
 			// catch stuff that is not correctly formatted.. like  accidently dropping "just plain text drags"
-			data = JSON.parse(event.dataTransfer.getData('text/plain'));
+			data = JSON.parse(ev.dataTransfer.getData('text/plain'));
 		} catch (e) {
 			return;
 		}
+
 		if (!data) return;
 		ev.preventDefault();
 		const insertIntoEditor = function (link) {
@@ -206,7 +207,8 @@ export class Meme extends EasyMDE {
 				pack.getEntity(data.id).then((entity) => insertIntoEditor(`@Compendium[${data.pack}.${data.id}]{${entity.name}}`));
 			} else {
 				const entity = CONFIG[data.type].collection.instance.get(data.id);
-				insertIntoEditor(`@${data.type}[${entity._id}]{${entity.name}}`);
+
+				insertIntoEditor(`@${data.type}[${entity.id}]{${entity.name}}`);
 			}
 		} catch (e) {
 			console.error('Dropped incorrect data!', data);

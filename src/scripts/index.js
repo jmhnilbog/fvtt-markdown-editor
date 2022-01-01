@@ -37,6 +37,10 @@ Hooks.on('init', function () {
 	if (MemeSettings.isMarkdownItDeflistActive) {
 		activateMarkdownItDeflist();
 	}
+
+	if (MemeSettings.isMarkdownItAttrsActive) {
+		activateMarkdownItAttrs();
+	}
 });
 
 function activateRichTextFeatures() {
@@ -148,4 +152,10 @@ function activateMarkdownItDeflist() {
 	const markdownItDeflist = require('markdown-it-deflist');
 
 	markdownIt.use(markdownItDeflist);
+}
+
+function activateMarkdownItAttrs() {
+	const markdownItAttrs = require('markdown-it-attrs');
+
+	markdownIt.use(markdownItAttrs);
 }
